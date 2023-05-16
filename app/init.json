@@ -1,0 +1,153 @@
+{
+    "db": {
+        "manufacturers": [
+            "create table if not exists manufacturers (",
+            "   id serial primary key,",
+            "   name varchar(255) unique",
+            ");"
+        ],
+        "products": [
+            "create table if not exists products (",
+            "   id serial primary key,",
+            "   name varchar(255) unique,",
+            "   manufacturer_id integer references manufacturers (id) on delete cascade on update cascade,",
+            "   price decimal(15, 2) not null",
+            ");"
+        ],
+        "stores": [
+            "create table if not exists stores (",
+            "   id serial primary key,",
+            "   name varchar(255) unique",
+            ");"
+        ],
+        "deliveries": [
+            "create table if not exists deliveries (",
+            "   id serial primary key,",
+            "   product_id integer references products (id) on delete cascade on update cascade,",
+            "   store_id integer references stores (id) on delete cascade on update cascade,",
+            "   delivery_date date not null,",
+            "   product_count integer not null check(product_count > 0)",
+            ");"
+        ],
+        "clients": [
+            "create table if not exists clients (",
+            "   id serial primary key,",
+            "   last_name varchar(255) not null,",
+            "   first_name varchar(255) not null",
+            ");"
+        ],
+        "purchases": [
+            "create table if not exists purchases (",
+            "   id serial primary key,",
+            "   client_id integer references clients (id) on delete cascade on update cascade,",
+            "   store_id integer references stores (id) on delete cascade on update cascade,",
+            "   purchase_date date not null",
+            ");"
+        ],
+        "purchase_items": [
+            "create table if not exists purchase_items (",
+            "   id serial primary key,",
+            "   purchase_id integer references purchases (id) on delete cascade on update cascade,",
+            "   product_id integer references products (id) on delete cascade on update cascade,",
+            "   product_count integer not null check(product_count > 0)",
+            ");"
+        ]
+    },
+    "data": {
+        "manufacturers": [
+            {"id": 1, "name": "Nokia"},
+            {"id": 2, "name": "Oppo"},
+            {"id": 3, "name": "Huawei"},
+            {"id": 4, "name": "Samsung"},
+            {"id": 5, "name": "Xiaomi"},
+            {"id": 6, "name": "Realme"},
+            {"id": 7, "name": "Apple"},
+            {"id": 8, "name": "OnePlus"}
+        ],
+        "products": [
+            {"id": 1, "name": "Nokia XR21", "manufacturer_id": 1, "price": 52257},
+            {"id": 2, "name": "Nokia C12 Plug", "manufacturer_id": 1, "price": 8862},
+            {"id": 3, "name": "Nokia C12 Pro", "manufacturer_id": 1, "price": 8862},
+            {"id": 4, "name": "Oppo Reno8 T", "manufacturer_id": 2, "price": 25999},
+            {"id": 5, "name": "Oppo A96", "manufacturer_id": 2, "price": 16999},
+            {"id": 6, "name": "Oppo A17K", "manufacturer_id": 2, "price": 6999},
+            {"id": 7, "name": "Huawei Mate50 Pro", "manufacturer_id": 3, "price": 79999},
+            {"id": 8, "name": "Huawei P50", "manufacturer_id": 3, "price": 39999},
+            {"id": 9, "name": "Huawei Nova 10 SE", "manufacturer_id": 3, "price": 21999},
+            {"id": 10, "name": "Samsung Galaxy S23 Ultra", "manufacturer_id": 4, "price": 139999},
+            {"id": 11, "name": "Samsung Galaxy S23+", "manufacturer_id": 4, "price": 97999},
+            {"id": 12, "name": "Samsung Galaxy S22 Ultra", "manufacturer_id": 4, "price": 102999},
+            {"id": 13, "name": "Xiaomi 12 Pro", "manufacturer_id": 5, "price": 69999},
+            {"id": 14, "name": "Xiaomi 12", "manufacturer_id": 5, "price": 54999},
+            {"id": 15, "name": "Xiaomi 12T", "manufacturer_id": 5, "price": 41799},
+            {"id": 16, "name": "Realme GT 5G", "manufacturer_id": 6, "price": 45999},
+            {"id": 17, "name": "Realme GT Neo", "manufacturer_id": 6, "price": 43999},
+            {"id": 18, "name": "Realme 10 Pro+", "manufacturer_id": 6, "price": 37999},
+            {"id": 19, "name": "Apple IPhone 14 Pro Max", "manufacturer_id": 7, "price": 169299},
+            {"id": 20, "name": "Apple IPhone 14 Pro", "manufacturer_id": 7, "price": 156399},
+            {"id": 21, "name": "Apple IPhone 13 Pro Max", "manufacturer_id": 7, "price": 145399},
+            {"id": 22, "name": "OnePlus 10 Pro", "manufacturer_id": 8, "price": 60499},
+            {"id": 23, "name": "OnePlus Ace Pro", "manufacturer_id": 8, "price": 58999},
+            {"id": 24, "name": "OnePlus 10T", "manufacturer_id": 8, "price": 49999}
+        ],
+        "stores": [
+            {"id": 1, "name": "Москва"},
+            {"id": 2, "name": "Санкт-Петербург"},
+            {"id": 3, "name": "Новосибирск"},
+            {"id": 4, "name": "Краснодар"},
+            {"id": 5, "name": "Екатеринбург"}
+        ],
+        "deliveries": [
+            {"id": 1, "product_id": 1, "store_id": 1, "delivery_date": "2023-01-01", "product_count": 1000},
+            {"id": 2, "product_id": 2, "store_id": 1, "delivery_date": "2022-01-20", "product_count": 523},
+            {"id": 3, "product_id": 3, "store_id": 1, "delivery_date": "2023-02-20", "product_count": 872},
+            {"id": 4, "product_id": 4, "store_id": 2, "delivery_date": "2022-03-03", "product_count": 5231},
+            {"id": 5, "product_id": 2, "store_id": 2, "delivery_date": "2023-03-17", "product_count": 231},
+            {"id": 6, "product_id": 8, "store_id": 2, "delivery_date": "2023-05-12", "product_count": 821},
+            {"id": 7, "product_id": 18, "store_id": 3, "delivery_date": "2022-04-04", "product_count": 7821},
+            {"id": 8, "product_id": 7, "store_id": 3, "delivery_date": "2023-01-12", "product_count": 582},
+            {"id": 9, "product_id": 17, "store_id": 3, "delivery_date": "2022-03-12", "product_count": 825},
+            {"id": 10, "product_id": 9, "store_id": 4, "delivery_date": "2022-01-18", "product_count": 789},
+            {"id": 11, "product_id": 6, "store_id": 4, "delivery_date": "2023-05-02", "product_count": 201},
+            {"id": 12, "product_id": 16, "store_id": 4, "delivery_date": "2022-05-02", "product_count": 301},
+            {"id": 13, "product_id": 22, "store_id": 5, "delivery_date": "2022-12-12", "product_count": 1024},
+            {"id": 14, "product_id": 24, "store_id": 5, "delivery_date": "2023-01-12", "product_count": 528},
+            {"id": 15, "product_id": 10, "store_id": 5, "delivery_date": "2023-03-22", "product_count": 865}
+        ],
+        "clients": [
+            {"id": 1, "last_name": "Иванов", "first_name": "Иван"},
+            {"id": 2, "last_name": "Сергеев", "first_name": "Сергей"},
+            {"id": 3, "last_name": "Петров", "first_name": "Петр"},
+            {"id": 4, "last_name": "Петров", "first_name": "Иван"},
+            {"id": 5, "last_name": "Петров", "first_name": "Сергей"},
+            {"id": 6, "last_name": "Иванов", "first_name": "Сергей"},
+            {"id": 7, "last_name": "Иванов", "first_name": "Петр"},
+            {"id": 8, "last_name": "Сергеев", "first_name": "Иван"},
+            {"id": 9, "last_name": "Сергеев", "first_name": "Петр"}
+        ],
+        "purchases": [
+            {"id": 1, "client_id": 1, "store_id": 1, "purchase_date": "2023-02-02"},
+            {"id": 2, "client_id": 2, "store_id": 2, "purchase_date": "2023-05-05"},
+            {"id": 3, "client_id": 3, "store_id": 3, "purchase_date": "2023-04-12"},
+            {"id": 4, "client_id": 4, "store_id": 4, "purchase_date": "2023-04-13"},
+            {"id": 5, "client_id": 5, "store_id": 5, "purchase_date": "2023-04-14"},
+            {"id": 6, "client_id": 6, "store_id": 5, "purchase_date": "2023-04-15"},
+            {"id": 7, "client_id": 7, "store_id": 4, "purchase_date": "2023-04-16"},
+            {"id": 8, "client_id": 8, "store_id": 3, "purchase_date": "2023-04-17"},
+            {"id": 9, "client_id": 9, "store_id": 2, "purchase_date": "2023-04-18"},
+            {"id": 10, "client_id": 1, "store_id": 1, "purchase_date": "2023-04-19"}
+        ],
+        "purchase_items": [
+            {"id": 1, "purchase_id": 1, "product_id": 1, "product_count": 1},
+            {"id": 2, "purchase_id": 2, "product_id": 2, "product_count": 2},
+            {"id": 3, "purchase_id": 3, "product_id": 3, "product_count": 1},
+            {"id": 4, "purchase_id": 4, "product_id": 4, "product_count": 3},
+            {"id": 5, "purchase_id": 5, "product_id": 5, "product_count": 1},
+            {"id": 6, "purchase_id": 6, "product_id": 6, "product_count": 2},
+            {"id": 7, "purchase_id": 7, "product_id": 7, "product_count": 3},
+            {"id": 8, "purchase_id": 8, "product_id": 8, "product_count": 1},
+            {"id": 9, "purchase_id": 9, "product_id": 9, "product_count": 1},
+            {"id": 10, "purchase_id": 10, "product_id": 10, "product_count": 2}
+        ]
+    }
+}

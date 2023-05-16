@@ -1,0 +1,22 @@
+[tool.pdm]
+
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "artemowkin", email = "artyom.groshev2017@gmail.com"},
+]
+dependencies = [
+    "fastapi>=0.95.1",
+    "psycopg-binary>=3.1.9",
+    "uvicorn>=0.22.0",
+    "psycopg>=3.1.9",
+    "termcolor>=2.3.0",
+    "python-dotenv>=1.0.0",
+]
+requires-python = ">=3.10"
+license = {text = "MIT"}
+
+[tool.pdm.scripts]
+dev = "uvicorn app.main:app"
